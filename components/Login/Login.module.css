@@ -1,0 +1,55 @@
+.authForm {
+  border-radius: 26px;
+  padding: 50px 55px 0 55px;
+}
+
+.authForm h2 {
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 89.4%;
+  color: var(--dark);
+}
+
+.authForm h5 {
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 89.4%;
+  color: var(--dark);
+
+  margin-bottom: 80px;
+}
+
+.authForm label span {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 89.4%;
+  color: var(--dark);
+}
+
+.authForm span:nth-child(2) {
+  margin-top: 5px;
+  border-radius: 6px;
+  font-size: 18px;
+}
+
+.authForm input {
+  font-size: 20px;
+}
+
+.loginButton {
+  margin-top: 60px;
+  width: 100%;
+  height: 60px;
+  cursor: pointer;
+  font-size: 20px;
+
+  color: var(--white);
+  background: var(--primary);
+  border-radius: 93px;
+
+  transition: all 0.3s ease;
+}
+
+.loginButton:active {
+  transform: scale(0.95);
+}
