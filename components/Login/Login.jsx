@@ -1,10 +1,16 @@
-import { CheckCircleTwoTone } from "@ant-design/icons";
-import { Button, Card, Input } from "antd";
-import React, { useState } from "react";
+import { Button, Card, Input,  PageHeader, Spin } from "antd";
+import React, { useEffect, useState } from "react";
 
 import styles from "./Login.module.css";
 
-const Login = () => {
+import { success, error, warning, info } from "../../services/AlertingService";
+import callApi from "../../common/callApi";
+import cn from "classnames";
+import ReactCodeInput from "react-verification-code-input";
+import { useCookies } from "react-cookie";
+import add from "date-fns/add";
+
+const Login = ({ setActiveType }) => {
   const [loginNumber, setLoginNumber] = useState("");
   const [numberValid, setNumberValid] = useState(true);
   const [numberTouched, setNumberTouched] = useState(false);
@@ -66,25 +72,145 @@ const Login = () => {
     }
   };
 
+  const [isOpenCode, setIsOpenCode] = useState(false);
+  const [numberLoading, setNumberLoading] = useState(false);
+  const checkNumber = () => {
+    if (loginNumber === "" || (numberTouched && !numberValid)) {
+      error("Неверный номер!", 5);
+      return;
+    }
+
+    const number = loginNumber.replace(/\s+/g, "");
+
+    const loginCustomer = async () => {
+      try {
+        setNumberLoading(true);
+        const response = await callApi(
+          `/send_login_code`,
+          "POST",
+          {
+            name: "",
+            phone_number: number.slice(number.length - 10),
+          },
+          {}
+        );
+
+        setNumberLoading(false);
+        if (response === "Success") {
+          // open code verification
+          setIsOpenCode(true);
+          return;
+        }
+
+        error(response.detail, 5);
+      } catch (e) {}
+    };
+
+    loginCustomer();
+  };
+
+  const [code, setCode] = useState("");
+  const [codeLoading, setCodeLoading] = useState(false);
+  const changeCode = (event) => {
+    setCode(event);
+  };
+  const [cookies, setCookie] = useCookies(["jwt"]);
+
+  useEffect(() => {
+    if (code.length === 6) {
+      verifyCode();
+    }
+  }, [code]);
+
+  const verifyCode = () => {
+    if (code.length < 6) {
+      error("Код не заполнен", 5);
+      return;
+    }
+
+    const sendVerifyCode = async () => {
+      try {
+        setCodeLoading(true);
+        const response = await callApi(
+          `/verify_login_code?code=${code}`,
+          "GET",
+          undefined,
+          {}
+        );
+
+        if (response.detail) {
+          error(response.detail, 5);
+        } else {
+          success("Успешный вход.", 5);
+          setCookie("jwt", response, {
+            path: "/",
+            expires: new Date(add(new Date(), { days: 15 })),
+          });
+          // todo: navigate to menu
+        }
+
+        setCodeLoading(false);
+      } catch (e) {}
+    };
+
+    sendVerifyCode();
+  };
+
   return (
-    <Card className={styles.authForm} style={{ width: 614 }}>
-      <h2>Вход</h2>
-      <h5>Еще не брали кофе? Зарегистрируйтесь</h5>
+    <>
+      <Card
+        className={cn(styles.authForm, {
+          [styles.hidden]: isOpenCode,
+        })}
+        style={{ width: 614 }}
+      >
+        <h2>Вход</h2>
+        <h5>
+          Еще не брали кофе? <Button type="link" onClick={() => setActiveType('registration')}>Зарегистрируйтесь</Button>
+        </h5>
 
-      <label>
-        <span>Номер телефона</span>
-        <Input
-          value={loginNumber}
-          onChange={handleTelephoneChange}
-          status={numberValid ? "" : "error"}
-          suffix={
-            numberTouched && numberValid ? <CheckCircleTwoTone twoToneColor="#52c41a" /> : ""
-          }
+        <label>
+          <span>Номер телефона</span>
+          <Input
+            value={loginNumber}
+            onChange={handleTelephoneChange}
+            status={numberValid ? "" : "error"}
+          />
+        </label>
+
+        <Spin tip="Отправляю..." spinning={numberLoading}>
+          <button className={styles.loginButton} onClick={checkNumber}>
+            ВОЙТИ
+          </button>
+        </Spin>
+      </Card>
+      <Card
+        className={cn(styles.authForm, {
+          [styles.hidden]: !isOpenCode,
+        })}
+        style={{ width: 614 }}
+      >
+        <PageHeader
+          className={styles.verifyTitle}
+          onBack={() => setIsOpenCode(false)}
+          title="Подтверждение номера"
         />
-      </label>
 
-      <button className={styles.loginButton}>ВОЙТИ</button>
-    </Card>
+        <div className={styles.code}>
+          <ReactCodeInput
+            type="number"
+            fields={6}
+            value={code}
+            onChange={changeCode}
+          />
+        </div>
+        <Spin tip="Отправляю..." spinning={codeLoading}>
+          <button className={styles.loginButton} onClick={verifyCode}>
+            ПОДТВЕРДИТЬ
+          </button>
+        </Spin>
+      </Card>
+    </>
   );
 };
 

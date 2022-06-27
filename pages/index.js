@@ -4,10 +4,11 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
 import Login from "../components/Login/Login";
+import { AlertingService } from "../services/AlertingService.jsx";
+import { Registration } from "../components/Registration/Registration";
 
 export default function Home() {
-
-  const [activeType, setActiveType] = useState('login');
+  const [activeType, setActiveType] = useState("login");
 
   return (
     <div className={styles.container}>
@@ -19,6 +20,8 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <AlertingService horizontal={"right"} vertical={"top"} />
 
       <div className={styles.bgWrap}>
         <Image
@@ -39,11 +42,11 @@ export default function Home() {
           <p className={styles.p}>some text</p>
         </div>
         <div className={styles.authFormWrapper}>
-          {
-            activeType === 'login'
-              ? (<Login />)
-              : (<div></div>)
-          }
+          {activeType === "login" ? (
+            <Login setActiveType={setActiveType} />
+          ) : (
+            <Registration setActiveType={setActiveType} />
+          )}
         </div>
       </main>
     </div>

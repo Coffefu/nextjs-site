@@ -1,5 +1,3 @@
-import axios from "axios";
-
 const { NEXT_PUBLIC_ENVIRONMENT } = process.env;
 
 export default async function callApi(
@@ -10,10 +8,8 @@ export default async function callApi(
   jwt = false
 ) {
   const config = {
-    method: method | "get",
-    responseType: "json",
+    method: method || "get",
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json",
     },
     body: payload && JSON.stringify(payload),
@@ -24,7 +20,7 @@ export default async function callApi(
     config.headers["jwt-token"] = jwt;
   }
 
-  const res = await fetch(`https://cofefu.ru${NEXT_PUBLIC_ENVIRONMENT || ''}` + endpoint, config)
+  const res = await fetch(`https://cofefu.ru${NEXT_PUBLIC_ENVIRONMENT || ''}/api` + endpoint, config)
         .then(response => {
             return response.json();
         })

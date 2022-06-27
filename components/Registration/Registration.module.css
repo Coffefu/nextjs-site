@@ -42,7 +42,7 @@
   font-size: 20px;
 }
 
-.loginButton {
+.button {
   margin-top: 60px;
   width: 100%;
   height: 60px;
@@ -56,27 +56,6 @@
   transition: all 0.3s ease;
 }
 
-.loginButton:active {
+.button:active {
   transform: scale(0.95);
-}
-
-.hidden {
-  display: none;
-}
-
-.verifyTitle {
-  padding: 0 !important;
-
-  margin-bottom: 117px;
-}
-
-.code {
-  display: flex;
-  justify-content: center;
-}
-
-.verifyTitle span {
-  font-weight: 500 !important;
-  font-size: 28px !important;
-  color: var(--dark);
 }
