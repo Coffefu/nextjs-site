@@ -169,7 +169,7 @@ const Login = ({ setActiveType }) => {
           Еще не брали кофе? <Button type="link" onClick={() => setActiveType('registration')}>Зарегистрируйтесь</Button>
         </h5>
 
-        <label>
+        <label className={styles.phoneLabel}>
           <span>Номер телефона</span>
           <Input
             value={loginNumber}

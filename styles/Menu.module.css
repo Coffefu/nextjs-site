@@ -1,0 +1,8 @@
+.bgWrap {
+  display: block;
+  position: fixed;
+
+  height: 260px;
+  width: 100vw;
+  z-index: -1;
+}

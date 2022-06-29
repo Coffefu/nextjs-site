@@ -5,11 +5,15 @@ import styles from "./Registration.module.css";
 import { success, error, warning, info } from "../../services/AlertingService";
 import { Button, Card, Input, PageHeader, Spin } from "antd";
 import cn from "classnames";
+import callApi from "../../common/callApi";
+import { useCookies } from "react-cookie";
 
 export const Registration = ({ setActiveType }) => {
   const [number, setNumber] = useState("");
   const [numberValid, setNumberValid] = useState(true);
   const [name, setName] = useState("");
+  const [cookies, setCookie] = useCookies(["jwt"]);
+    const [registerLoading, setRegisterLoading] = useState(false)
 
   const handleTelephoneChange = (event) => {
     const num = event.target.value.replace(/\s+/g, "");
@@ -68,10 +72,57 @@ export const Registration = ({ setActiveType }) => {
   };
 
   const handleNameChange = (event) => {
-    if (/^[a-zA-Zа-яА-ЯёЁ]+$/.test(event.target.value) || event.target.value === '') {
-        setName(event.target.value);
+    if (
+      /^[a-zA-Zа-яА-ЯёЁ]+$/.test(event.target.value) ||
+      event.target.value === ""
+    ) {
+      setName(event.target.value);
     }
-}
+  };
+
+  const sendRegisterData = () => {
+    if (name === "" || number === "") {
+      error("Данные не заполнены", 5);
+      return;
+    }
+
+    const phone = number.replace(/\s+/g, "");
+    const customer = {
+      name: name,
+      phone_number: phone.slice(phone.length - 10),
+    };
+
+    const registerCustomer = async () => {
+      try {
+        setRegisterLoading(true);
+        const response = await callApi(
+          "/register_customer",
+          "POST",
+          customer,
+          {}
+        );
+
+        setRegisterLoading(false);
+        if (response.detail) {
+          error(response.detail, 5);
+          return;
+        }
+        if (response) {
+          success(
+            "Регистрация успешна. Не забудьте подтвердить номер телефона. Сделать это можно по кнопке ниже или в профиле.",
+            5
+          );
+          setCookie("jwt", response, {
+            path: "/",
+            expires: new Date(add(new Date(), { days: 15 })),
+          });
+          // todo: navigate to menu
+        }
+      } catch (e) {}
+    };
+
+    registerCustomer();
+  };
 
   return (
     <>
@@ -84,14 +135,11 @@ export const Registration = ({ setActiveType }) => {
           </Button>
         </h5>
 
-        <label>
+        <label className={styles.nameLabel}>
           <span>Ваше имя</span>
-          <Input
-            value={name}
-            onChange={handleNameChange}
-          />
+          <Input value={name} onChange={handleNameChange} />
         </label>
-        <label>
+        <label className={styles.phoneLabel}>
           <span>Номер телефона</span>
           <Input
             value={number}
@@ -100,9 +148,9 @@ export const Registration = ({ setActiveType }) => {
           />
         </label>
 
-        <Spin tip="Отправляю...">
-          <button className={styles.button}>
-            ВОЙТИ
+        <Spin tip="Отправляю..." spinning={registerLoading}>
+          <button className={styles.button} onClick={sendRegisterData}>
+            ЗАРЕГИСТРИРОВАТЬСЯ
           </button>
         </Spin>
       </Card>

@@ -39,7 +39,12 @@ export default function Home() {
             Кофе теперь
             <br /> легко взять с<br /> собой
           </h1>
-          <p className={styles.p}>some text</p>
+          <p className={styles.p}>
+            Зарегистрируйся на сайте<br/>
+            Выбери любимое кофе<br/>
+            Оформи заказ на удобное тебе время<br/>
+            Приди в кофейню и оплати свой заказ<br/>
+          </p>
         </div>
         <div className={styles.authFormWrapper}>
           {activeType === "login" ? (
