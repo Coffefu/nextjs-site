@@ -6,3 +6,14 @@
   width: 100vw;
   z-index: -1;
 }
+
+.content {
+  width: calc(100vw - 256px);
+  height: 100vh;
+  overflow: auto;
+  margin-top: 12px;
+}
+
+.tabs {
+  width:  calc(100vw - 280px) !important;
+}
