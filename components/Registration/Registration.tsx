@@ -1,21 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent } from "react";
 
 import styles from "./Registration.module.css";
 
-import { success, error, warning, info } from "../../services/AlertingService";
+import {
+  success,
+  error,
+  warning,
+  info,
+} from "../../services/AlertingFunctions";
 import { Button, Card, Input, PageHeader, Spin } from "antd";
 import cn from "classnames";
 import callApi from "../../common/callApi";
 import { useCookies } from "react-cookie";
+import { RegistrationProps } from "./Registration.props";
 
-export const Registration = ({ setActiveType }) => {
+import { add } from "date-fns";
+
+export const Registration = ({ setActiveType }: RegistrationProps) => {
   const [number, setNumber] = useState("");
   const [numberValid, setNumberValid] = useState(true);
   const [name, setName] = useState("");
   const [cookies, setCookie] = useCookies(["jwt"]);
-    const [registerLoading, setRegisterLoading] = useState(false)
+  const [registerLoading, setRegisterLoading] = useState(false);
 
-  const handleTelephoneChange = (event) => {
+  const handleTelephoneChange = (event: ChangeEvent<HTMLInputElement>) => {
     const num = event.target.value.replace(/\s+/g, "");
 
     if (num.length === 11 && /^(\+7|7|8)[0-9]{10}$/.test(num)) {
@@ -71,7 +79,7 @@ export const Registration = ({ setActiveType }) => {
     }
   };
 
-  const handleNameChange = (event) => {
+  const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (
       /^[a-zA-Zа-яА-ЯёЁ]+$/.test(event.target.value) ||
       event.target.value === ""

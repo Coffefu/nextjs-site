@@ -1,14 +1,14 @@
-import { useState } from 'react'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import React, { useState } from "react";
+import type { NextPage } from "next";
+import Head from "next/head";
+import Image from "next/image";
+import styles from "../styles/Home.module.css";
+import Login from "../components/Login/Login";
+import { Registration } from "../components/Registration/Registration";
+import AlertingService from "../services";
 
-import Login from '../components/Login/Login'
-import { AlertingService } from '../services/AlertingService.js'
-import { Registration } from '../components/Registration/Registration'
-
-export default function Home() {
-  const [activeType, setActiveType] = useState('login')
+const Home: NextPage = () => {
+  const [activeType, setActiveType] = useState("login");
 
   return (
     <div className={styles.container}>
@@ -21,7 +21,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <AlertingService horizontal={'right'} vertical={'top'} />
+      <AlertingService horizontal={"right"} vertical={"top"} />
 
       <div className={styles.bgWrap}>
         <Image
@@ -51,7 +51,7 @@ export default function Home() {
           </p>
         </div>
         <div className={styles.authFormWrapper}>
-          {activeType === 'login' ? (
+          {activeType === "login" ? (
             <Login setActiveType={setActiveType} />
           ) : (
             <Registration setActiveType={setActiveType} />
@@ -59,5 +59,7 @@ export default function Home() {
         </div>
       </main>
     </div>
-  )
-}
+  );
+};
+
+export default Home;

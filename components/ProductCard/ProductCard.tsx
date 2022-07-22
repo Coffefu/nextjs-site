@@ -1,7 +1,8 @@
 import styles from "./ProductCard.module.css";
 import { Badge } from "antd";
+import { ProductCardProps } from "./ProductCard.props";
 
-export const ProductCard = ({ product }) => {
+export const ProductCard = ({ product }: ProductCardProps) => {
   const stringSizes = ["S", "M", "L"];
 
   return (

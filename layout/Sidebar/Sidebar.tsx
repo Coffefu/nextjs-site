@@ -5,18 +5,18 @@ import {
   ClockCircleOutlined,
 } from "@ant-design/icons";
 import { Button, Menu } from "antd";
-import { useState } from "react";
+import { useState, ReactElement } from "react";
 
 import styles from "./Sidebar.module.css";
-import LogoIcon from './logo.svg';
+import LogoIcon from "./logo.svg";
+import { SidebarProps } from "./Sidebar.props";
+import cn from "classnames";
 
-function getItem(label, key, icon, children, type) {
+function getItem(label: string, key: string, icon: ReactElement) {
   return {
     key,
     icon,
-    children,
     label,
-    type,
   };
 }
 
@@ -27,7 +27,9 @@ const items = [
   getItem("Профиль", "4", <UserOutlined />),
 ];
 
-export const Sidebar = () => {
+export const Sidebar = ({ className }: SidebarProps) => {
+  console.log(LogoIcon);
+
   const [collapsed, setCollapsed] = useState(false);
 
   const toggleCollapsed = () => {
@@ -35,9 +37,9 @@ export const Sidebar = () => {
   };
 
   return (
-    <div className={styles.sidebar}>
+    <div className={cn(className, styles.sidebar)}>
       <div className={styles.logoWrapper}>
-        <LogoIcon className={styles.logo}/>
+        <LogoIcon className={styles.logo} />
       </div>
       <Menu
         defaultSelectedKeys={["1"]}

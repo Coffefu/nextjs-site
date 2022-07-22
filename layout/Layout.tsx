@@ -1,8 +1,9 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import styles from "./Layout.module.css";
+import { LayoutProps } from "./Layout.props";
 import { Sidebar } from "./Sidebar/Sidebar";
 
-const Layout = ({ children }) => {
+const Layout = ({ children }: LayoutProps) => {
   return (
     <div className={styles.wrapper}>
       <Sidebar className={styles.sidebar} />
@@ -11,8 +12,10 @@ const Layout = ({ children }) => {
   );
 };
 
-export const withLayout = (Component) => {
-  return function withLayoutComponent(props) {
+export const withLayout = <T extends Record<string, unknown>>(
+  Component: FunctionComponent<T>
+) => {
+  return function withLayoutComponent(props: T): JSX.Element {
     return (
       <Layout>
         <Component {...props} />

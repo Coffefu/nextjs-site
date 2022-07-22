@@ -1,20 +1,26 @@
-import { Button, Card, Input,  PageHeader, Spin } from "antd";
-import React, { useEffect, useState } from "react";
+import { Button, Card, Input, PageHeader, Spin } from "antd";
+import React, { useEffect, useState, ChangeEvent } from "react";
 
 import styles from "./Login.module.css";
 
-import { success, error, warning, info } from "../../services/AlertingService";
+import {
+  success,
+  error,
+  warning,
+  info,
+} from "../../services/AlertingFunctions";
 import callApi from "../../common/callApi";
 import cn from "classnames";
 import ReactCodeInput from "react-verification-code-input";
 import { useCookies } from "react-cookie";
 import add from "date-fns/add";
+import { LoginProps } from "./Login.props";
 
-const Login = ({ setActiveType }) => {
+const Login = ({ setActiveType }: LoginProps) => {
   const [loginNumber, setLoginNumber] = useState("");
   const [numberValid, setNumberValid] = useState(true);
   const [numberTouched, setNumberTouched] = useState(false);
-  const handleTelephoneChange = (event) => {
+  const handleTelephoneChange = (event: ChangeEvent<HTMLInputElement>) => {
     setNumberTouched(true);
 
     const num = event.target.value.replace(/\s+/g, "");
@@ -111,7 +117,7 @@ const Login = ({ setActiveType }) => {
 
   const [code, setCode] = useState("");
   const [codeLoading, setCodeLoading] = useState(false);
-  const changeCode = (event) => {
+  const changeCode = (event: string) => {
     setCode(event);
   };
   const [cookies, setCookie] = useCookies(["jwt"]);
@@ -166,7 +172,10 @@ const Login = ({ setActiveType }) => {
       >
         <h2>Вход</h2>
         <h5>
-          Еще не брали кофе? <Button type="link" onClick={() => setActiveType('registration')}>Зарегистрируйтесь</Button>
+          Еще не брали кофе?{" "}
+          <Button type="link" onClick={() => setActiveType("registration")}>
+            Зарегистрируйтесь
+          </Button>
         </h5>
 
         <label className={styles.phoneLabel}>
@@ -197,12 +206,7 @@ const Login = ({ setActiveType }) => {
         />
 
         <div className={styles.code}>
-          <ReactCodeInput
-            type="number"
-            fields={6}
-            value={code}
-            onChange={changeCode}
-          />
+          <ReactCodeInput type="number" fields={6} onChange={changeCode} />
         </div>
         <Spin tip="Отправляю..." spinning={codeLoading}>
           <button className={styles.loginButton} onClick={verifyCode}>
