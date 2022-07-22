@@ -1,14 +1,14 @@
-import { useState } from "react";
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
+import { useState } from 'react'
+import Head from 'next/head'
+import Image from 'next/image'
+import styles from '../styles/Home.module.css'
 
-import Login from "../components/Login/Login";
-import { AlertingService } from "../services/AlertingService.jsx";
-import { Registration } from "../components/Registration/Registration";
+import Login from '../components/Login/Login'
+import { AlertingService } from '../services/AlertingService.js'
+import { Registration } from '../components/Registration/Registration'
 
 export default function Home() {
-  const [activeType, setActiveType] = useState("login");
+  const [activeType, setActiveType] = useState('login')
 
   return (
     <div className={styles.container}>
@@ -21,7 +21,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <AlertingService horizontal={"right"} vertical={"top"} />
+      <AlertingService horizontal={'right'} vertical={'top'} />
 
       <div className={styles.bgWrap}>
         <Image
@@ -40,14 +40,18 @@ export default function Home() {
             <br /> легко взять с<br /> собой
           </h1>
           <p className={styles.p}>
-            Зарегистрируйся на сайте<br/>
-            Выбери любимое кофе<br/>
-            Оформи заказ на удобное тебе время<br/>
-            Приди в кофейню и оплати свой заказ<br/>
+            Зарегистрируйся на сайте
+            <br />
+            Выбери любимое кофе
+            <br />
+            Оформи заказ на удобное тебе время
+            <br />
+            Приди в кофейню и оплати свой заказ
+            <br />
           </p>
         </div>
         <div className={styles.authFormWrapper}>
-          {activeType === "login" ? (
+          {activeType === 'login' ? (
             <Login setActiveType={setActiveType} />
           ) : (
             <Registration setActiveType={setActiveType} />
@@ -55,5 +59,5 @@ export default function Home() {
         </div>
       </main>
     </div>
-  );
+  )
 }
