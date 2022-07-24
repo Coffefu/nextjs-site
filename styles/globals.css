@@ -12,12 +12,14 @@ a {
 }
 
 * {
+  font-family: "Montserrat";
   box-sizing: border-box;
 }
 
 :root {
   --white: #fff;
   --primary: #26376a;
+  --primary-light: #1175d1;
   --dark: #2d2d2d;
   --gray: #afafaf;
 

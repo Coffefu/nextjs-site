@@ -7,11 +7,40 @@
 }
 
 .ant-tabs-content-holder {
-  
 }
 .ant-tabs-tabpane.ant-tabs-tabpane-active {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
+
+  margin-bottom: 12px;
+}
+
+.ant-tabs-tab-btn {
+  color: var(--dark);
+  padding: 6px 16px;
+  border-radius: 26px;
+
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: var(--white);
+
+  padding: 6px 16px;
+  background: var(--primary);
+  border: 2px solid var(--primary);
+  border-radius: 26px;
+}
+
+.ant-tabs-ink-bar.ant-tabs-ink-bar-animated {
+  display: none;
+}
+
+.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: #1175d1;
 }

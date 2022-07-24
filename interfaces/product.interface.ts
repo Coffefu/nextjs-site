@@ -11,3 +11,9 @@ export interface IProductVariation {
   size: number;
   price: number;
 }
+
+export interface ITopping {
+  id: number,
+  name: string,
+  price: number,
+}

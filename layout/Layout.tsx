@@ -4,6 +4,7 @@ import { LayoutProps } from "./Layout.props";
 import { Sidebar } from "./Sidebar/Sidebar";
 
 const Layout = ({ children }: LayoutProps) => {
+  
   return (
     <div className={styles.wrapper}>
       <Sidebar className={styles.sidebar} />

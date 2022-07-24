@@ -11,8 +11,9 @@ import styles from "./Sidebar.module.css";
 import LogoIcon from "./logo.svg";
 import { SidebarProps } from "./Sidebar.props";
 import cn from "classnames";
+import Link from "next/link";
 
-function getItem(label: string, key: string, icon: ReactElement) {
+function getItem(label: ReactElement, key: string, icon: ReactElement) {
   return {
     key,
     icon,
@@ -21,14 +22,13 @@ function getItem(label: string, key: string, icon: ReactElement) {
 }
 
 const items = [
-  getItem("Меню", "1", <CoffeeOutlined />),
-  getItem("Корзина", "2", <ShoppingCartOutlined />),
-  getItem("Заказ", "3", <ClockCircleOutlined />),
-  getItem("Профиль", "4", <UserOutlined />),
+  getItem(<Link href="/menu">Меню</Link>, "1", <CoffeeOutlined />),
+  getItem(<Link href="/">Корзина</Link>, "2", <ShoppingCartOutlined />),
+  getItem(<Link href="/">Заказ</Link>, "3", <ClockCircleOutlined />),
+  getItem(<Link href="/">Профиль</Link>, "4", <UserOutlined />),
 ];
 
 export const Sidebar = ({ className }: SidebarProps) => {
-  console.log(LogoIcon);
 
   const [collapsed, setCollapsed] = useState(false);
 
