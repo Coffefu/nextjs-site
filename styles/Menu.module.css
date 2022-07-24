@@ -10,11 +10,35 @@
 .content {
   width: calc(100vw - 256px);
   height: 100vh;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   margin-top: 12px;
   padding: 12px;
 }
 
 .tabs {
   width:  calc(100vw - 280px) !important;
+}
+
+.main {
+  position: relative;
+}
+
+.upButton {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 24px;
+  width: 45px;
+  height: 45px;
+  color: var(--white);
+  background-color: var(--primary);
+ border: none;
+}
+
+.upButton:hover {
+  background-color: var(--primary-light);
 }
