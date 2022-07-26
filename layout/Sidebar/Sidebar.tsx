@@ -4,7 +4,7 @@ import {
   CoffeeOutlined,
   ClockCircleOutlined,
 } from "@ant-design/icons";
-import { Button, Menu } from "antd";
+import { Badge, Button, Menu, MenuProps} from 'antd'
 import { useState, ReactElement } from "react";
 
 import styles from "./Sidebar.module.css";
@@ -12,6 +12,7 @@ import LogoIcon from "./logo.svg";
 import { SidebarProps } from "./Sidebar.props";
 import cn from "classnames";
 import Link from "next/link";
+import { useRouter } from 'next/router'
 
 function getItem(label: ReactElement, key: string, icon: ReactElement) {
   return {
@@ -22,18 +23,24 @@ function getItem(label: ReactElement, key: string, icon: ReactElement) {
 }
 
 const items = [
-  getItem(<Link href="/menu">Меню</Link>, "1", <CoffeeOutlined />),
-  getItem(<Link href="/">Корзина</Link>, "2", <ShoppingCartOutlined />),
-  getItem(<Link href="/">Заказ</Link>, "3", <ClockCircleOutlined />),
-  getItem(<Link href="/">Профиль</Link>, "4", <UserOutlined />),
+  getItem(<Link href="/menu">Меню</Link>, "/menu", <CoffeeOutlined />),
+  getItem(<Link href="/cart">Корзина</Link>, "/cart", <ShoppingCartOutlined />),
+  getItem(<Link href="/">Заказ</Link>, "/order", <ClockCircleOutlined />),
+  getItem(<Link href="/">Профиль</Link>, "/profile", <UserOutlined />),
 ];
 
 export const Sidebar = ({ className }: SidebarProps) => {
 
+  const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
+  const [current, setCurrent] = useState(router.asPath);
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
+  };
+
+  const onClick: MenuProps['onClick'] = e => {
+    setCurrent(e.key);
   };
 
   return (
@@ -42,7 +49,8 @@ export const Sidebar = ({ className }: SidebarProps) => {
         <LogoIcon className={styles.logo} />
       </div>
       <Menu
-        defaultSelectedKeys={["1"]}
+        onClick={onClick}
+        selectedKeys={[current]}
         mode="inline"
         theme="dark"
         inlineCollapsed={collapsed}

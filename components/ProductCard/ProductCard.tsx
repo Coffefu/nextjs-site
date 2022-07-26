@@ -1,14 +1,12 @@
-import styles from "./ProductCard.module.css";
-import { Badge, Modal } from "antd";
-import { ProductCardProps } from "./ProductCard.props";
-import React, { MouseEvent, useEffect, useState } from "react";
-import { ITopping } from "../../interfaces/product.interface";
+import styles from './ProductCard.module.css'
+import { Badge, Modal } from 'antd'
+import { ProductCardProps } from './ProductCard.props'
+import React, { MouseEvent, useEffect, useState } from 'react'
+import { ITopping } from '../../interfaces/product.interface'
 import {
-  success,
-  error,
-  warning,
-  info,
-} from "../../services/AlertingFunctions";
+  success
+} from '../../services/AlertingFunctions'
+import { motion } from 'framer-motion'
 
 interface ISize {
   size: number;
@@ -17,23 +15,23 @@ interface ISize {
 }
 
 export const ProductCard = ({ product, toppings }: ProductCardProps) => {
-  const stringSizes = ["S", "M", "L"];
+  const stringSizes = ['S', 'M', 'L'];
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
     setIsModalVisible(true);
-  };
+  }
 
   const handleCancel = () => {
     setIsModalVisible(false);
-  };
-
+    clearProduct();
+  }
   const [sum, setSum] = useState<number>(product.variations[0].price);
 
   const [size, setSize] = useState<ISize>({
-    ...product.variations[0],
-  });
+    ...product.variations[0]
+  })
   const [topping, setTopping] = useState<ITopping[]>([]);
 
   const changeSize = (evt: MouseEvent<HTMLDivElement>) => {
@@ -48,17 +46,17 @@ export const ProductCard = ({ product, toppings }: ProductCardProps) => {
           parseInt(evt.currentTarget.dataset.size)) ||
         -1,
       price: price,
-      id: evt.currentTarget.dataset.id || "",
+      id: evt.currentTarget.dataset.id || ''
     });
 
-    setSum(price + (toppings.reduce((a, b) => (a += b.price), 0) || 0));
+    setSum(price + (topping.reduce((a, b) => (a += b.price), 0) || 0));
 
-    const checkboxes = document.getElementsByClassName(styles.sizeCheckbox);
+    const checkboxes = document.getElementsByClassName(styles.sizeCheckbox)
     for (let i = 0; i < checkboxes.length; i += 1) {
       checkboxes[i].classList.remove(styles.activeSize);
     }
     evt.currentTarget.classList.add(styles.activeSize);
-  };
+  }
 
   const changeTopping = (evt: MouseEvent<HTMLDivElement>) => {
     const clickedTopping =
@@ -74,7 +72,7 @@ export const ProductCard = ({ product, toppings }: ProductCardProps) => {
     // if click on active topping
     if (topping.map((item) => item.id).includes(clickedTopping)) {
       const filteredToppings = [
-        ...topping.filter((item) => item.id !== clickedTopping),
+        ...topping.filter((item) => item.id !== clickedTopping)
       ];
       setTopping(filteredToppings);
       setSum(size.price + filteredToppings.reduce((a, b) => (a += b.price), 0));
@@ -83,29 +81,29 @@ export const ProductCard = ({ product, toppings }: ProductCardProps) => {
       );
       for (let i = 0; i < checkboxes.length; i += 1) {
         if (
-          checkboxes[i].getAttribute("data-topping") &&
-          parseInt(checkboxes[i].getAttribute("data-topping") || "-1") ===
-            clickedTopping
+          checkboxes[i].getAttribute('data-topping') &&
+          parseInt(checkboxes[i].getAttribute('data-topping') || '-1') ===
+          clickedTopping
         ) {
           checkboxes[i].classList.remove(styles.activeTopping);
         }
       }
-      return;
+      return
     }
 
     setTopping([
       ...topping,
       {
         id: clickedTopping,
-        name: evt.currentTarget.dataset.name || "",
-        price: clickedPrice,
-      },
-    ]);
+        name: evt.currentTarget.dataset.name || '',
+        price: clickedPrice
+      }
+    ])
 
     setSum(
       size.price + clickedPrice + topping.reduce((a, b) => (a += b.price), 0)
     );
-    
+
     const checkboxes = document.getElementsByClassName(styles.toppingCheckbox);
     for (let i = 0; i < checkboxes.length; i += 1) {
       if (!topping.map((item) => item.id).includes(parseInt(checkboxes[i].getAttribute('data-topping') || '-1'))) {
@@ -113,16 +111,45 @@ export const ProductCard = ({ product, toppings }: ProductCardProps) => {
       }
     }
     evt.currentTarget.classList.add(styles.activeTopping);
-  };
+  }
+
+  const clearProduct = () => {
+    setSum(product.variations[0].price);
+    setSize({
+      ...product.variations[0]
+    });
+    setTopping([]);
+
+    let checkboxes = document.getElementsByClassName(styles.sizeCheckbox)
+    for (let i = 0; i < checkboxes.length; i += 1) {
+      checkboxes[i].classList.remove(styles.activeSize);
+    }
+    checkboxes[0].classList.add(styles.activeSize);
+
+    checkboxes = document.getElementsByClassName(styles.toppingCheckbox);
+    for (let i = 0; i < checkboxes.length; i += 1) {
+      checkboxes[i].classList.remove(styles.activeTopping);
+    }
+  }
 
   const addProduct = () => {
     success('Продукт успешно добавлен в корзину!', 5);
 
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-      cart.push({ ...product, price: sum, topping: topping, id: size.id });
-      localStorage.setItem('cart', JSON.stringify(cart));
-      handleCancel();
-  };
+    cart.push({ ...product, price: sum, topping: topping, id: size.id });
+    localStorage.setItem('cart', JSON.stringify(cart));
+    handleCancel();
+  }
+
+  const addMoreProduct = () => {
+    success('Продукт успешно добавлен в корзину!', 5);
+
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    cart.push({ ...product, price: sum, topping: topping, id: size.id });
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    clearProduct();
+  }
 
   return (
     <>
@@ -133,15 +160,15 @@ export const ProductCard = ({ product, toppings }: ProductCardProps) => {
             <Badge
               key={variant.id}
               count={stringSizes[variant.size]}
-              style={{ backgroundColor: "#D8AB7E" }}
+              style={{ backgroundColor: '#D8AB7E' }}
             />
           ))}
         </div>
         <div className={styles.description}>{product.description}</div>
         <div className={styles.price}>
           {product.variations
-            .reduce((a, b) => (a += b.price + "/"), "")
-            .slice(0, -1)}{" "}
+            .reduce((a, b) => (a += b.price + '/'), '')
+            .slice(0, -1)}{' '}
           ₽
         </div>
       </div>
@@ -158,7 +185,7 @@ export const ProductCard = ({ product, toppings }: ProductCardProps) => {
                 <div
                   key={index}
                   className={`${styles.sizeCheckbox} ${
-                    index === 0 ? styles.activeSize : ""
+                    index === 0 ? styles.activeSize : ''
                   }`}
                   data-size={item.size}
                   onClick={changeSize}
@@ -167,7 +194,7 @@ export const ProductCard = ({ product, toppings }: ProductCardProps) => {
                 >
                   {stringSizes[item.size]}
                 </div>
-              );
+              )
             })}
           </div>
 
@@ -186,15 +213,18 @@ export const ProductCard = ({ product, toppings }: ProductCardProps) => {
                 >
                   {`${topping.name} + ${topping.price}₽`}
                 </div>
-              );
+              )
             })}
           </div>
 
-          <button className={styles.addButton} onClick={addProduct}>
-            {`Добавить - ${sum}₽`} 
-          </button>
+          <motion.button className={styles.addButton} onClick={addProduct} layout>
+            {`Добавить - ${sum}₽`}
+          </motion.button>
+          <motion.button className={styles.addButton} onClick={addMoreProduct} layout>
+            +1
+          </motion.button>
         </div>
       </Modal>
     </>
-  );
-};
+  )
+}

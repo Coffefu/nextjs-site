@@ -16,7 +16,6 @@ import { useAnimation, motion } from "framer-motion";
 interface MenuProps extends Record<string, unknown> {
   menu: IProduct[];
   toppings: ITopping[];
-  firstCategory: number;
 }
 
 function Menu({ menu, toppings }: MenuProps) {
@@ -59,10 +58,10 @@ function Menu({ menu, toppings }: MenuProps) {
   return (
     <div className={styles.container}>
       <Head>
-        <title> Cofefu - Меню </title>
+        <title> Cofefu - Заказ </title>
         <meta
           name="description"
-          content="Выбери любимый продукт из меню не приходя в кофейню!"
+          content="Закажи кофе удаленно и забери в удобное время"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

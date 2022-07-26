@@ -6,6 +6,7 @@
   width: 100%;
   min-height: 40px;
   padding: 8px;
+  z-index: 11;
 }
 
 .default button {

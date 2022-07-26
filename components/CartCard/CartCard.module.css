@@ -1,17 +1,16 @@
 .card {
-  max-width: 320px;
+  max-width: 4400px;
   display: grid;
-  grid-template-rows: auto 1fr auto;
-  gap: 12px;
+  grid-template-rows: 1fr auto 1fr;
+  gap: 8px;
 
-  padding: 20px;
+  padding: 16px;
 
   border: 2px solid var(--primary);
   border-radius: 12px;
 
   cursor: pointer;
 
-  text-align: center;
   color: var(--dark);
 }
 
@@ -22,9 +21,9 @@
 }
 
 .title {
-  display: flex;
+  display: grid;
   align-items: flex-start;
-  justify-content: center;
+  grid-template-columns: auto auto 1fr;
   gap: 6px;
 }
 
@@ -32,12 +31,6 @@
   font-weight: 500;
   font-size: 32px;
   line-height: 89.4%;
-}
-
-.description {
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 18px;
 }
 
 .price {
@@ -151,4 +144,13 @@
 
 .addButton:hover {
   background-color: var(--primary-light);
+}
+.toppings {
+  font-size: 16px;
+}
+
+.deleteItem {
+  justify-self: flex-end;
+  padding: 4px;
+  font-size: 24px;
 }
