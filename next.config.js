@@ -1,3 +1,5 @@
+const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
+
 module.exports = {
     webpack(config, options) {
         config.module.rules.push({

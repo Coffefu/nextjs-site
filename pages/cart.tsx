@@ -15,6 +15,8 @@ import Link from 'next/link'
 import { CartCard } from '../components/CartCard/CartCard'
 import { ICartProduct } from '../components/CartCard/CartCard.props'
 import _ from 'lodash'
+import { TimePicker } from 'antd';
+import format from 'dayjs';
 
 interface CartProps extends Record<string, unknown> {
   toppings: ITopping[];
@@ -155,11 +157,18 @@ function Cart({ toppings }: CartProps) {
           <div className={styles.orderInfo}>
             <h2 className={styles.orderTitle}>Информация о заказе</h2>
 
-            <h3>Кофейня</h3>
-            <Select defaultValue="d" style={{ width: 'auto' }} onChange={handleChange} size='large'>
-              <Option value="e">Полка кофе E3</Option>
-              <Option value="d">Полка кофе D7</Option>
-            </Select>
+            <div>
+              <h3 className={styles.title}>Кофейня</h3>
+              <Select defaultValue="d" style={{ width: 'auto' }} onChange={handleChange} size='large'>
+                <Option value="e">Полка кофе E3</Option>
+                <Option value="d">Полка кофе D7</Option>
+              </Select>
+            </div>
+
+            <div>
+              <h3 className={styles.title}>Во сколько заберете?</h3>
+              <TimePicker defaultValue={format(new Date(), 'HH:mm')} format="HH:mm" size='large' />
+            </div>
 
           </div>
         </div>

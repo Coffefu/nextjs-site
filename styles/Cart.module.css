@@ -10,7 +10,7 @@
 .content {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 48px;
+    gap: 200px;
 }
 
 .empty {
@@ -52,9 +52,16 @@
 
 .orderTitle {
     font-size: 32px;
+    margin-bottom: 4px;
+}
 
+.title {
+     font-size: 24px;
 }
 
 .orderInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
 
 }
