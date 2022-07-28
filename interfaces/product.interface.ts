@@ -17,3 +17,11 @@ export interface ITopping {
   name: string,
   price: number,
 }
+
+export interface ICoffeehouse {
+  id: number,
+  name: string,
+  placement: string,
+  open_time: string,
+  close_time: string
+}

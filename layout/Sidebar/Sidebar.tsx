@@ -25,8 +25,8 @@ function getItem(label: ReactElement, key: string, icon: ReactElement) {
 const items = [
   getItem(<Link href="/menu">Меню</Link>, "/menu", <CoffeeOutlined />),
   getItem(<Link href="/cart">Корзина</Link>, "/cart", <ShoppingCartOutlined />),
-  getItem(<Link href="/">Заказ</Link>, "/order", <ClockCircleOutlined />),
-  getItem(<Link href="/">Профиль</Link>, "/profile", <UserOutlined />),
+  getItem(<Link href="/order">Заказ</Link>, "/order", <ClockCircleOutlined />),
+  getItem(<Link href="/profile">Профиль</Link>, "/profile", <UserOutlined />),
 ];
 
 export const Sidebar = ({ className }: SidebarProps) => {

@@ -1,9 +1,11 @@
+import { IOrder } from '../pages/cart'
+
 const { NEXT_PUBLIC_ENVIRONMENT } = process.env;
 
 export default async function callApi(
   endpoint: string,
   method?: string,
-  payload?: { [key: string]: string },
+  payload?: { [key: string]: string } | IOrder,
   options?: { [key: string]: string },
   jwt: string = ""
 ) {
