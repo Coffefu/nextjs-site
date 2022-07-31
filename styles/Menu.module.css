@@ -42,3 +42,19 @@
 .upButton:hover {
   background-color: var(--primary-light);
 }
+
+@media (max-width: 797px) {
+  .content {
+    width: 100%;
+  }
+  .tabs {
+    width: 100% !important;
+  }
+
+  .tabs {
+    padding-bottom: 200px;
+  }
+  .upButton {
+    bottom: 215px;
+  }
+} 

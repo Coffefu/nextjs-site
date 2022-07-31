@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react";
+import { Bottombar } from "./Bottombar/Bottombar";
 import styles from "./Layout.module.css";
 import { LayoutProps } from "./Layout.props";
 import { Sidebar } from "./Sidebar/Sidebar";
@@ -9,6 +10,7 @@ const Layout = ({ children }: LayoutProps) => {
     <div className={styles.wrapper}>
       <Sidebar className={styles.sidebar} />
       <div className={styles.body}>{children}</div>
+      <Bottombar className={styles.bottombar}/>
     </div>
   );
 };

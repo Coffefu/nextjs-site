@@ -1,7 +1,7 @@
 .bgWrap {
   position: fixed;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   overflow: hidden;
   z-index: -1;
 }
@@ -9,6 +9,7 @@
 .main {
   max-width: 1696px;
   margin: auto;
+  width: 100%;
 
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -21,14 +22,14 @@
 .h1 {
   font-weight: 500;
   font-size: 80px;
-  line-height: 89.4%;
+  line-height: 82px;
   color: var(--white);
 }
 
 .p {
   font-weight: 400;
   font-size: 36px;
-  line-height: 89.4%;
+  line-height: 38px;
   color: var(--white);
 }
 
@@ -37,4 +38,23 @@
   margin-top: 126px;
 
   border-radius: 26px;
+}
+
+@media (max-width: 1696px) {
+    .main {
+      padding: 0 24px;
+    }
+}
+
+@media (max-width: 1320px) {
+  .main {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-bottom: 48px;
+    justify-items: center;
+  }
+  .authFormWrapper {
+    justify-self: center;
+    padding-right: 12px;
+  }
 }

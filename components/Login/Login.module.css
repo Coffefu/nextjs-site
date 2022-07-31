@@ -88,3 +88,23 @@
   font-size: 28px !important;
   color: var(--dark);
 }
+
+@media (max-width: 1320px) {
+  .authForm h2 {
+    font-size: 44px;
+    line-height: 89.4%;
+  }
+
+  .authForm label span {
+    font-size: 28px;
+    line-height: 30px;
+  }
+
+  .authForm span:nth-child(2) {
+    font-size: 28px;
+  }
+
+  .authForm input {
+    font-size: 28px;
+  }
+}

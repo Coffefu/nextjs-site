@@ -25,3 +25,9 @@
 .menu svg {
     font-size: 22px;
 }
+
+@media (max-width: 797px) {
+  .sidebar {
+    display: none;
+  }
+} 

@@ -92,3 +92,14 @@ textarea.ant-input {
 .ant-input-prefix {
   font-size: 14px;
 }
+
+@media (max-width: 797px) {
+  .ant-tabs-tab-btn {
+    font-size: 18px;
+    
+  }
+
+  .ant-tabs-tab + .ant-tabs-tab  {
+    margin: 0
+  }
+} 
