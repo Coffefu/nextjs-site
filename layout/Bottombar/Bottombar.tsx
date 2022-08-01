@@ -6,7 +6,8 @@ import {
 } from "@ant-design/icons";
 import cn from "classnames";
 import Link from "next/link";
-import React, { ReactElement } from "react";
+import { useRouter } from "next/router";
+import React, { ReactElement, useState } from "react";
 
 import styles from "./Bottombar.module.css";
 import { BottombarProps } from "./Bottombar.props";
@@ -27,15 +28,23 @@ const items = [
 ];
 
 export const Bottombar = ({ className }: BottombarProps) => {
+
+  const router = useRouter();
+  const [current, setCurrent] = useState(router.asPath);
+
   return (
     <div className={cn(styles.bottombar, className)}>
+      <div className={styles.border}>
       {items &&
         items.map((item) => 
-        (<div className={styles.link} key={item.key}>
+        (<div className={cn(styles.link, {
+          [styles.active]: item.key === current
+        })} key={item.key}>
             <div className={styles.icon}>{item.icon}</div>
             {item.label}
         </div>
         ))}
+      </div>
     </div>
   );
 };

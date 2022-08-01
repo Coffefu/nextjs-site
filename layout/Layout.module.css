@@ -17,7 +17,7 @@
     grid-template-columns: 1fr;
   }
   .bottombar {
-    display: block;
+    display: flex;
     position: absolute;
     bottom: 0;
     left: 0;
